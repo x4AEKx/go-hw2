@@ -8,7 +8,7 @@ import (
 	"github.com/beevik/ntp"
 )
 
-func GetTime(host string) (time.Time, string) {
+func GetTime(host string) {
 	if host == "" {
 		host = "0.beevik-ntp.pool.ntp.org"
 	}
@@ -22,5 +22,4 @@ func GetTime(host string) (time.Time, string) {
 	time := time.Now().Add(response.ClockOffset)
 
 	fmt.Printf("%s", time)
-	return time, ""
 }
