@@ -1,4 +1,4 @@
-module github.com/x4AEKx/go-hw2/Development/task1
+module github.com/x4AEKx/go-hw2/Development/ext
 
 go 1.16
 
