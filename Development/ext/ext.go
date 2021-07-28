@@ -1,5 +1,7 @@
 package ext
 
+// package exactTime
+
 import (
 	"fmt"
 	"os"
@@ -8,6 +10,7 @@ import (
 	"github.com/beevik/ntp"
 )
 
+// GetTime : show current Time or return error and exit status
 func GetTime(host string) {
 	if host == "" {
 		host = "0.beevik-ntp.pool.ntp.org"
