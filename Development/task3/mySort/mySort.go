@@ -2,7 +2,7 @@ package mySort
 
 import "sort"
 
-func sortStr(strs []string) []string {
+func SortStr(strs []string) []string {
 	sort.Strings(strs)
 	return strs
 }
