@@ -7,6 +7,8 @@ import (
 	"log"
 	"os"
 	"sort"
+
+	"github.com/x4aekx/go-hw2/Development/task3/mySort"
 )
 
 func fileScanner(r io.Reader) ([]string, error) {
@@ -26,13 +28,13 @@ func fileScanner(r io.Reader) ([]string, error) {
 
 func main() {
 	file, err := os.Open("file.txt")
-	defer file.Close()
 	if err != nil {
 		log.Fatalf("Error when opening file: %s", err)
 	}
+	defer file.Close()
 
 	str, _ := fileScanner(file)
-	result := mySort.sortStr(str)
+	result := mySort.SortStr(str)
 	fmt.Println(result)
 	fmt.Println("Sorted: ", sort.StringsAreSorted(result))
 }
