@@ -13,6 +13,7 @@ func main() {
 	str, err := scan.ReadFile("file.txt")
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	result := mySort.SortStr(str)
