@@ -43,11 +43,11 @@ func main() {
 
 	opts := mygrep.NewOpts(*after, *before, *context, *count, *ignoreCase, *invert, *fixed, *lineNum)
 
-	fmt.Println(opts)
-
 	result := mygrep.Search(pattern, *opts, files)
 
-	fmt.Println(result)
+	for _, v := range result {
+		fmt.Println(v)
+	}
 }
 
 // grep -A 3 -i "example" demo_text
