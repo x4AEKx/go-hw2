@@ -74,6 +74,11 @@ func searchFile(pattern string, options Opts, path string) []string {
 			if options.lineNum {
 				line = append([]byte(fmt.Sprintf("%d:", i)), line...)
 			}
+			if options.fixed {
+				regex := regexp.MustCompile(pattern)
+				out := regex.ReplaceAll(line, []byte(fmt.Sprintf("\033[1;34m%s\033[0m", pattern)))
+				line = out
+			}
 			matches = append(matches, string(line))
 		}
 	}
