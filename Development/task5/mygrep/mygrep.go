@@ -79,9 +79,9 @@ func searchFile(pattern string, options Opts, path string) []string {
 	}
 
 	if options.count {
-		i := fmt.Sprint(len(matches))
-		sliceLetters := strings.Split(i, "")
-		matches = sliceLetters
+		strLenOfMatch := fmt.Sprint(len(matches))
+		sliceLenOfMatch := strings.Split(strLenOfMatch, "")
+		matches = sliceLenOfMatch
 	}
 
 	return matches
