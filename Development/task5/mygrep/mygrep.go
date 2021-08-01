@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"strings"
 )
 
 // Opts options command line
@@ -75,6 +76,12 @@ func searchFile(pattern string, options Opts, path string) []string {
 			}
 			matches = append(matches, string(line))
 		}
+	}
+
+	if options.count {
+		i := fmt.Sprint(len(matches))
+		sliceLetters := strings.Split(i, "")
+		matches = sliceLetters
 	}
 
 	return matches
