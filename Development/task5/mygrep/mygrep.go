@@ -2,8 +2,10 @@ package mygrep
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"regexp"
 	"strings"
@@ -58,7 +60,11 @@ func Search(pattern string, options Opts, files []string) []string {
 
 func searchFile(pattern string, options Opts, path string) []string {
 	matches := make([]string, 0)
-	reader := open(path)
+	reader, err := open(path)
+	if err != nil {
+		log.Fatalf("Error: %s", err)
+		return nil
+	}
 
 	inverted := options.invert
 	var i int
@@ -79,6 +85,7 @@ func searchFile(pattern string, options Opts, path string) []string {
 				out := regex.ReplaceAll(line, []byte(fmt.Sprintf("\033[1;34m%s\033[0m", pattern)))
 				line = out
 			}
+
 			matches = append(matches, string(line))
 		}
 	}
@@ -92,11 +99,11 @@ func searchFile(pattern string, options Opts, path string) []string {
 	return matches
 }
 
-func open(path string) *bufio.Reader {
+func open(path string) (*bufio.Reader, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		panic("cannot open file")
+		return nil, errors.New("cannot open file")
 	}
 
-	return bufio.NewReader(file)
+	return bufio.NewReader(file), nil
 }

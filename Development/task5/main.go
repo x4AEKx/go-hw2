@@ -38,6 +38,12 @@ func main() {
 		showUsageAndExit(0)
 	}
 
+	args := flag.Args()
+
+	if len(args) < 2 {
+		showUsageAndExit(1)
+	}
+
 	var pattern = flag.Args()[0]
 	var files = flag.Args()[1:]
 
