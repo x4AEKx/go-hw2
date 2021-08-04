@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"regexp"
@@ -61,7 +60,6 @@ func Cut(options Opts) ([]string, error) {
 				}
 				if field <= len(lineSliceByDelimiter) {
 					newLine = append(newLine, lineSliceByDelimiter[field-1]...)
-					fmt.Println(newLine)
 				}
 			}
 
