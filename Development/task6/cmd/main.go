@@ -6,7 +6,6 @@ import (
 	"go-hw2/Development/task6/pkg"
 	"log"
 	"os"
-	"strings"
 )
 
 func usage() {
@@ -27,7 +26,7 @@ func main() {
 	var showHelp = flag.Bool("h", false, "Show help message") // +
 
 	if *delimiter == "" {
-		*delimiter = "\n"
+		*delimiter = "\t"
 	}
 
 	log.SetFlags(0)
@@ -48,6 +47,8 @@ func main() {
 		showUsageAndExit(1)
 	}
 
+	// fmt.Println([]byte(*delimiter))
+
 	opts := pkg.NewOpts(*fields, *delimiter, *separated)
 
 	result, err := pkg.Cut(*opts)
@@ -55,5 +56,7 @@ func main() {
 		log.Fatalf("cut: %s", err)
 	}
 
-	fmt.Println(strings.Join(result, " "))
+	for _, v := range result {
+		fmt.Println(v)
+	}
 }

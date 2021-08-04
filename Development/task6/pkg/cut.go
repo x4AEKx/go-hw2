@@ -4,8 +4,10 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -41,21 +43,32 @@ func Cut(options Opts) ([]string, error) {
 		}
 
 		line = line[:len(line)-1]
+		fmt.Println(line)
 		lineSliceByDelimiter := bytes.Split(line, []byte(options.delimiter))
+		// fmt.Println(lineSliceByDelimiter)
+		newLine := make([]byte, 0)
 
-		for _, v := range fields {
-			field, err := strconv.Atoi(v)
-			if err != nil {
-				return nil, errors.New("invalid field value")
+		match, _ := regexp.Match(options.delimiter, line)
+		if match {
+			for _, v := range fields {
+				field, err := strconv.Atoi(v)
+				if err != nil {
+					return nil, errors.New("invalid field value")
+				}
+				if field <= 0 {
+					return nil, errors.New("fields are numbered from 1")
+				}
+				if field <= len(lineSliceByDelimiter) {
+					newLine = append(newLine, lineSliceByDelimiter[field-1]...)
+					fmt.Println(newLine)
+				}
 			}
-			if field <= 0 {
-				return nil, errors.New("fields are numbered from 1")
-			}
-			if field <= len(lineSliceByDelimiter) {
-				matches = append(matches, string(lineSliceByDelimiter[field-1]))
-			}
+
+			matches = append(matches, string(newLine))
 		}
+
 	}
+	// fmt.Println(matches)
 
 	return matches, nil
 }
