@@ -1,4 +1,4 @@
-package cut
+package pkg
 
 import (
 	"bufio"
@@ -26,7 +26,6 @@ func NewOpts(fields string, delimiter string, separated bool) *Opts {
 	}
 }
 
-// Cut returns cut string in the os.Stdin
 func Cut(options Opts) ([]string, error) {
 	matches := make([]string, 0)
 

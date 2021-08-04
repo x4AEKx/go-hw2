@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-hw2/Development/task6/cut"
+	"go-hw2/Development/task6/pkg"
 	"log"
 	"os"
 	"strings"
@@ -21,7 +21,7 @@ func showUsageAndExit(exitcode int) {
 
 func main() {
 	var fields = flag.String("f", "", "выбрать поля (колонки)")               // +
-	var delimiter = flag.String("d", "\n", "использовать другой разделитель") // +
+	var delimiter = flag.String("d", "\t", "использовать другой разделитель") // +
 	var separated = flag.Bool("s", false, "только строки с разделителем")     // ?не понял назначение флага
 
 	var showHelp = flag.Bool("h", false, "Show help message") // +
@@ -38,9 +38,9 @@ func main() {
 		log.Fatalf("cut: you must specify a list of fields")
 	}
 
-	opts := cut.NewOpts(*fields, *delimiter, *separated)
+	opts := pkg.NewOpts(*fields, *delimiter, *separated)
 
-	result, err := cut.Cut(*opts)
+	result, err := pkg.Cut(*opts)
 	if err != nil {
 		log.Fatalf("cut: %s", err)
 	}
