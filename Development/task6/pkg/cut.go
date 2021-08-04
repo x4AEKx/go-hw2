@@ -28,6 +28,7 @@ func NewOpts(fields string, delimiter string, separated bool) *Opts {
 	}
 }
 
+//Cut returns slice strings of cut strings in the stdin
 func Cut(options Opts) ([]string, error) {
 	matches := make([]string, 0)
 
@@ -43,9 +44,9 @@ func Cut(options Opts) ([]string, error) {
 		}
 
 		line = line[:len(line)-1]
-		fmt.Println(line)
+
 		lineSliceByDelimiter := bytes.Split(line, []byte(options.delimiter))
-		// fmt.Println(lineSliceByDelimiter)
+
 		newLine := make([]byte, 0)
 
 		match, _ := regexp.Match(options.delimiter, line)
@@ -66,9 +67,7 @@ func Cut(options Opts) ([]string, error) {
 
 			matches = append(matches, string(newLine))
 		}
-
 	}
-	// fmt.Println(matches)
 
 	return matches, nil
 }
