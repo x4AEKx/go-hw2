@@ -48,8 +48,6 @@ func main() {
 		showUsageAndExit(1)
 	}
 
-	fmt.Println([]byte(*delimiter))
-
 	opts := pkg.NewOpts(*fields, *delimiter, *separated)
 
 	result, err := pkg.Cut(*opts)
