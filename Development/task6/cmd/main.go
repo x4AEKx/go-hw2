@@ -20,11 +20,15 @@ func showUsageAndExit(exitcode int) {
 }
 
 func main() {
-	var fields = flag.String("f", "", "выбрать поля (колонки)")               // +
-	var delimiter = flag.String("d", "\n", "использовать другой разделитель") // +
-	var separated = flag.Bool("s", false, "только строки с разделителем")     // ?не понял назначение флага
+	var fields = flag.String("f", "", "выбрать поля (колонки)")             // +
+	var delimiter = flag.String("d", "", "использовать другой разделитель") // +
+	var separated = flag.Bool("s", false, "только строки с разделителем")   // ?не понял назначение флага
 
 	var showHelp = flag.Bool("h", false, "Show help message") // +
+
+	if *delimiter == "" {
+		*delimiter = "\n"
+	}
 
 	log.SetFlags(0)
 	flag.Usage = usage
@@ -34,9 +38,17 @@ func main() {
 		showUsageAndExit(0)
 	}
 
-	if len(*fields) < 1 {
-		log.Fatalf("cut: you must specify a list of fields")
+	if len(*delimiter) > 1 {
+		log.Println("cut: the delimiter must be a single character")
+		showUsageAndExit(1)
 	}
+
+	if len(*fields) < 1 {
+		log.Println("cut: you must specify a list of fields")
+		showUsageAndExit(1)
+	}
+
+	fmt.Println([]byte(*delimiter))
 
 	opts := pkg.NewOpts(*fields, *delimiter, *separated)
 
