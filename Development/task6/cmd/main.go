@@ -21,7 +21,7 @@ func showUsageAndExit(exitcode int) {
 
 func main() {
 	var fields = flag.String("f", "", "выбрать поля (колонки)")               // +
-	var delimiter = flag.String("d", "\t", "использовать другой разделитель") // +
+	var delimiter = flag.String("d", "\n", "использовать другой разделитель") // +
 	var separated = flag.Bool("s", false, "только строки с разделителем")     // ?не понял назначение флага
 
 	var showHelp = flag.Bool("h", false, "Show help message") // +
