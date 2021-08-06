@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/x4aekx/go-hw2/Development/task2/unpack"
+	"go-hw2/Development/task2/pkg/unpack"
 )
 
 func main() {
