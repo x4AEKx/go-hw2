@@ -22,7 +22,9 @@ func GetTime(host string) {
 		os.Exit(1)
 	}
 
-	time := time.Now().Add(response.ClockOffset)
+	currentTime := time.Now()
+	exactTime := time.Now().Add(response.ClockOffset)
 
-	fmt.Printf("%s", time)
+	fmt.Printf("%s\n", currentTime)
+	fmt.Printf("%s\n", exactTime)
 }
