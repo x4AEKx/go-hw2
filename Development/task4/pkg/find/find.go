@@ -5,10 +5,10 @@ import (
 	"strings"
 )
 
-// SetsOfAnagramInDict function
+// SetsOfAnagram function
 // the function takes a slice of strings
 // returns a map of sets of anagrams
-func SetsOfAnagramInDict(words []string) map[string][]string {
+func SetsOfAnagram(words []string) map[string][]string {
 	myMap := make(map[string][]string)
 	resultMap := make(map[string][]string)
 
