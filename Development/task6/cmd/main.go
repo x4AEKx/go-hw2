@@ -2,8 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"go-hw2/Development/task6/pkg"
+	"go-hw2/Development/task6/pkg/cut"
 	"log"
 	"os"
 )
@@ -19,11 +18,11 @@ func showUsageAndExit(exitcode int) {
 }
 
 func main() {
-	var fields = flag.String("f", "", "выбрать поля (колонки)")             // +
-	var delimiter = flag.String("d", "", "использовать другой разделитель") // +
-	var separated = flag.Bool("s", false, "только строки с разделителем")   // ?не понял назначение флага
+	var fields = flag.String("f", "", "выбрать поля (колонки)")
+	var delimiter = flag.String("d", "", "использовать другой разделитель")
+	var separated = flag.Bool("s", false, "только строки с разделителем")
 
-	var showHelp = flag.Bool("h", false, "Show help message") // +
+	var showHelp = flag.Bool("h", false, "Show help message")
 
 	if *delimiter == "" {
 		*delimiter = "\t"
@@ -47,14 +46,15 @@ func main() {
 		showUsageAndExit(1)
 	}
 
-	opts := pkg.NewOpts(*fields, *delimiter, *separated)
+	cut := cut.New(*fields, *delimiter, *separated)
 
-	result, err := pkg.Cut(*opts)
+	err := cut.Execute()
 	if err != nil {
 		log.Fatalf("cut: %s", err)
 	}
 
-	for _, v := range result {
-		fmt.Println(v)
+	err = cut.Output()
+	if err != nil {
+		log.Fatalf("cut: %s", err)
 	}
 }
