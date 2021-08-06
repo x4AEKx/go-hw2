@@ -2,14 +2,13 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"go-hw2/Development/task5/mygrep"
+	"go-hw2/Development/task5/pkg/grep"
 	"log"
 	"os"
 )
 
 func usage() {
-	log.Printf("Usage: [OPTION]... PATTERNS [FILE]... \n")
+	log.Printf("Usage: ./grep [OPTION]... PATTERN [FILE]... \n")
 	flag.PrintDefaults()
 }
 
@@ -47,12 +46,16 @@ func main() {
 	var pattern = flag.Args()[0]
 	var files = flag.Args()[1:]
 
-	opts := mygrep.NewOpts(*after, *before, *context, *count, *ignoreCase, *invert, *fixed, *lineNum)
+	grep := grep.New(*after, *before, *context, *count, *ignoreCase, *invert, *fixed, *lineNum, pattern, files)
 
-	result := mygrep.Search(pattern, *opts, files)
+	err := grep.Execute()
+	if err != nil {
+		log.Fatalf("grep: %s", err)
+	}
 
-	for _, v := range result {
-		fmt.Println(v)
+	err = grep.Output()
+	if err != nil {
+		log.Fatalf("grep: %s", err)
 	}
 }
 
