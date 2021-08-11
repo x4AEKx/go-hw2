@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -42,6 +43,8 @@ func New(fields string, number bool, reverse bool, duplicate bool, files []strin
 func (s *Sort) Execute() error {
 	matches := make([]string, 0)
 
+	fields := strings.Split(s.args.fields, ",")
+
 	for _, file := range s.files {
 		fileMatches, err := searchFile(s.args, file)
 		if err != nil {
@@ -63,13 +66,41 @@ func (s *Sort) Execute() error {
 			}
 			matches = newMatches
 		}
+	}
 
+	if len(s.args.fields) > 0 {
+		for _, v := range fields {
+			field, err := strconv.Atoi(v)
+			if err != nil {
+				return errors.New("invalid field value")
+			}
+			if field <= 0 {
+				return errors.New("fields are numbered from 1")
+			}
+
+			sort.Slice(matches, func(i, j int) bool {
+				lhs := strings.Split(matches[i], " ")
+				rhs := strings.Split(matches[j], " ")
+
+				if len(lhs) <= field-1 || len(rhs) <= field-1 {
+					return lhs[0] < rhs[0]
+				}
+
+				if s.args.reverse {
+					return strings.Split(matches[i], " ")[field-1] >
+						strings.Split(matches[j], " ")[field-1]
+				} else {
+					return strings.Split(matches[i], " ")[field-1] <
+						strings.Split(matches[j], " ")[field-1]
+				}
+			})
+		}
+	} else {
 		if s.args.reverse {
 			sort.Sort(sort.Reverse(sort.StringSlice(matches)))
 		} else {
 			sort.Strings(matches)
 		}
-
 	}
 
 	s.result = matches

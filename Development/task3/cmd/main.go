@@ -18,7 +18,7 @@ func showUsageAndExit(exitcode int) {
 }
 
 func main() {
-	var fields = flag.String("k", "", "указание колонки для сортировки")
+	var fields = flag.String("k", "", "указание колонки для сортировки") // +
 	var number = flag.Bool("n", false, "сортировать по числовому значению")
 	var reverse = flag.Bool("r", false, "сортировать в обратном порядке")     // +
 	var duplicate = flag.Bool("u", false, "не выводить повторяющиеся строки") // +
