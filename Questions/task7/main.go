@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -38,10 +39,35 @@ func merge(a, b <-chan int) <-chan int {
 	return c
 }
 
+// рабочий merge
+func or(channels ...<-chan int) <-chan int {
+	var wg sync.WaitGroup
+	out := make(chan int)
+
+	output := func(c <-chan int) {
+		for n := range c {
+			out <- n
+		}
+		wg.Done()
+	}
+
+	wg.Add(len(channels))
+	for _, c := range channels {
+		go output(c)
+	}
+
+	go func() {
+		wg.Wait()
+		close(out)
+	}()
+
+	return out
+}
+
 func main() {
 	a := asChan(1, 3, 5, 7)
 	b := asChan(2, 4, 6, 8)
-	c := merge(a, b)
+	c := or(a, b)
 
 	for v := range c {
 		fmt.Println(v)
