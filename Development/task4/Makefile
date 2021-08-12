@@ -3,3 +3,6 @@ lint:
 
 vet:
 	go vet ./...
+
+test:
+	go test ./...
