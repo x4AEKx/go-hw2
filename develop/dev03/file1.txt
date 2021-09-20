@@ -1,0 +1,3 @@
+Qwerty A 10
+Asdfg B 1
+Zxcvb C 2
