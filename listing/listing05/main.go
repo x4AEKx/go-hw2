@@ -19,7 +19,7 @@ func main() {
 	var err error
 	err = test()
 
-	if err.(*customError) != nil { // опять про интерфейс
+	if err.(*customError) != nil { // опять про интерфейс, сравнивается {type:*customError, val: nil} и nil
 		println("error")
 		return
 	}
